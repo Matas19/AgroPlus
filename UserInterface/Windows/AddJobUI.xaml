@@ -1,0 +1,36 @@
+﻿<Window x:Class="UserInterface.Windows.AddJobUI"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UserInterface.Windows"
+        mc:Ignorable="d"
+        Title="AddJobUI" Height="450" Width="500">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Right">
+            <Label Content="Pavadinimas:" HorizontalAlignment="Right"/>
+            <Label Content="Aprašymas:" HorizontalAlignment="Right" Margin=" 0,15"/>
+            <Label Content="Data:" HorizontalAlignment="Right"/>
+            <Label Content="Lauko pavadinimas:" HorizontalAlignment="Right" Margin="0,6"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <TextBox x:Name="jobNameBox" Margin="5,5, 15, 5" MaxLength="50"/>
+            <TextBox x:Name="jobDiscriptionBox" Height="40" Margin="5,5,15,5"/>
+            <DatePicker x:Name="jobDatePicker" Margin="5,5,15,5"/>
+            <ComboBox x:Name="jobFieldBox" Margin="5,5,15,5">
+                
+            </ComboBox>
+        </StackPanel>
+        <Label Grid.ColumnSpan="2" Content="Pridėti lauką" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" FontWeight="SemiBold"/>
+        <Button Grid.ColumnSpan="2" Grid.Row="2" x:Name="addJobBtn" Content="Pridėti lauką" Click="PridetiDarba"/>
+    </Grid>
+</Window>
