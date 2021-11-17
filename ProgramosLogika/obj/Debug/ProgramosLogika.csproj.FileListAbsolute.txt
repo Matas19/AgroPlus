@@ -1,6 +1,0 @@
-C:\Users\Matas\source\repos\AgroPlus\ProgramosLogika\bin\Debug\ProgramosLogika.dll
-C:\Users\Matas\source\repos\AgroPlus\ProgramosLogika\bin\Debug\ProgramosLogika.pdb
-C:\Users\Matas\source\repos\AgroPlus\ProgramosLogika\obj\Debug\ProgramosLogika.csproj.AssemblyReference.cache
-C:\Users\Matas\source\repos\AgroPlus\ProgramosLogika\obj\Debug\ProgramosLogika.csproj.CoreCompileInputs.cache
-C:\Users\Matas\source\repos\AgroPlus\ProgramosLogika\obj\Debug\ProgramosLogika.dll
-C:\Users\Matas\source\repos\AgroPlus\ProgramosLogika\obj\Debug\ProgramosLogika.pdb

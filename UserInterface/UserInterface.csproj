@@ -79,6 +79,9 @@
     <Compile Include="Windows\AddJobUI.xaml.cs">
       <DependentUpon>AddJobUI.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\FieldInfoUI.xaml.cs">
+      <DependentUpon>FieldInfoUI.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\RegForm.xaml.cs">
       <DependentUpon>RegForm.xaml</DependentUpon>
     </Compile>
@@ -112,6 +115,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Windows\FieldInfoUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\RegForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

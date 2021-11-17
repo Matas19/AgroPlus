@@ -24,13 +24,13 @@
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1">
             <TextBox x:Name="jobNameBox" Margin="5,5, 15, 5" MaxLength="50"/>
-            <TextBox x:Name="jobDiscriptionBox" Height="40" Margin="5,5,15,5"/>
+            <TextBox x:Name="jobDiscriptionBox" Height="40" Margin="5,5,15,5" MaxLength="200"/>
             <DatePicker x:Name="jobDatePicker" Margin="5,5,15,5"/>
             <ComboBox x:Name="jobFieldBox" Margin="5,5,15,5">
                 
             </ComboBox>
         </StackPanel>
-        <Label Grid.ColumnSpan="2" Content="Pridėti lauką" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" FontWeight="SemiBold"/>
-        <Button Grid.ColumnSpan="2" Grid.Row="2" x:Name="addJobBtn" Content="Pridėti lauką" Click="PridetiDarba"/>
+        <Label Grid.ColumnSpan="2" Content="Pridėti naują darbą" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="26" FontWeight="SemiBold"/>
+        <Button Grid.ColumnSpan="2" Grid.Row="2" x:Name="addJobBtn" Content="Pridėti darbą" Click="PridetiDarba"/>
     </Grid>
 </Window>

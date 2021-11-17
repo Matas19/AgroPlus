@@ -93,8 +93,30 @@ namespace ProgramosLogika.Classes
 
                 }
             }
-
             return null;
+        }
+        public List<Vartotojas> GetUsers()
+        {
+            List<Vartotojas> users = new List<Vartotojas>();
+            Vartotojas user;
+            using (cmd = new SqlCommand($"SELECT * FROM Vartotojas", connection))
+            {
+                connection.Open();
+                using (dr = cmd.ExecuteReader())
+                {
+                    if (dr.HasRows)
+                    {
+                        while(dr.Read())
+                        {
+                            user = new Vartotojas(dr.GetInt32(0), dr.GetString(1), dr.GetString(2), dr.GetString(3), dr.GetString(4), dr.GetString(5));
+                            users.Add(user);
+                        }
+                    }
+                }
+                connection.Close();
+
+            }
+            return users;
         }
         public bool CheckFieldName(string name)
         {
@@ -160,6 +182,153 @@ namespace ProgramosLogika.Classes
                 cmd.ExecuteNonQuery();
                 connection.Close();
             }
+        }
+        public List<Darbas> GetJobs()
+        {
+            List<Darbas> jobs = new List<Darbas>();
+            List<Vartotojas> users = GetUsers();
+            List<Laukas> fields = GetFields();
+            Darbas job;
+            using (cmd = new SqlCommand(@"SELECT * FROM Darbas", connection))
+            {
+                connection.Open();
+                using (dr = cmd.ExecuteReader())
+                {
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            int id = dr.GetInt32(0);
+                            string pavadinimas = dr.GetString(1);
+                            string aprasymas = dr.GetString(2);
+                            bool statusasbool = dr.GetBoolean(3);
+                            int statusas;
+                            if (statusasbool)
+                            {
+                                statusas = 1;
+                            }
+                            else
+                            {
+                                statusas = 0;
+                            }
+                            DateTime date = dr.GetDateTime(4);
+                            Vartotojas user;
+                            if (dr[5] != DBNull.Value) 
+                            {
+                                user = users.First(x => x.Id == dr.GetInt32(5));
+                            }
+                            else
+                            {
+                                user = null;
+                            }
+                            Laukas field = fields.First(x => x.Id == dr.GetInt32(6));
+                            job = new Darbas(dr.GetInt32(0), dr.GetString(1), dr.GetString(2),statusas, dr.GetDateTime(4), user, field);
+                            jobs.Add(job);
+                        }
+                    }
+                }
+                connection.Close();
+            }
+            return jobs;
+        }
+        public List<Darbas> GetByField(Laukas laukas)
+        {
+            List<Darbas> jobs = new List<Darbas>();
+            List<Vartotojas> users = GetUsers();
+            List<Laukas> fields = GetFields();
+            Darbas job;
+            using (cmd = new SqlCommand($"SELECT * FROM Darbas WHERE FK_Laukas = {laukas.Id} ORDER BY Data", connection))
+            {
+                connection.Open();
+                using (dr = cmd.ExecuteReader())
+                {
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            int id = dr.GetInt32(0);
+                            string pavadinimas = dr.GetString(1);
+                            string aprasymas = dr.GetString(2);
+                            bool statusasbool = dr.GetBoolean(3);
+                            int statusas;
+                            if (statusasbool)
+                            {
+                                statusas = 1;
+                            }
+                            else
+                            {
+                                statusas = 0;
+                            }
+                            DateTime date = dr.GetDateTime(4);
+                            Vartotojas user;
+                            if (dr[5] != DBNull.Value)
+                            {
+                                user = users.First(x => x.Id == dr.GetInt32(5));
+                            }
+                            else
+                            {
+                                user = null;
+                            }
+                            Laukas field = fields.First(x => x.Id == dr.GetInt32(6));
+                            job = new Darbas(dr.GetInt32(0), dr.GetString(1), dr.GetString(2), statusas, dr.GetDateTime(4), user, field);
+                            jobs.Add(job);
+                        }
+                    }
+                }
+                connection.Close();
+            }
+            return jobs;
+        }
+        public List<Darbas> GetFieldsByWorker(bool uzimtas)
+        {
+            List<Darbas> jobs = new List<Darbas>();
+            List<Vartotojas> users = GetUsers();
+            List<Laukas> fields = GetFields();
+            Darbas job;
+            string cmdLine;
+            if (uzimtas) cmdLine = $"SELECT * FROM Darbas WHERE FK_Vartotojas IS NOT NULL";
+            else cmdLine = $"SELECT * FROM Darbas WHERE FK_Vartotojas IS NULL";
+            using (cmd = new SqlCommand(cmdLine, connection))
+            {
+                connection.Open();
+                using (dr = cmd.ExecuteReader())
+                {
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            int id = dr.GetInt32(0);
+                            string pavadinimas = dr.GetString(1);
+                            string aprasymas = dr.GetString(2);
+                            bool statusasbool = dr.GetBoolean(3);
+                            int statusas;
+                            if (statusasbool)
+                            {
+                                statusas = 1;
+                            }
+                            else
+                            {
+                                statusas = 0;
+                            }
+                            DateTime date = dr.GetDateTime(4);
+                            Vartotojas user;
+                            if (dr[5] != DBNull.Value)
+                            {
+                                user = users.First(x => x.Id == dr.GetInt32(5));
+                            }
+                            else
+                            {
+                                user = null;
+                            }
+                            Laukas field = fields.First(x => x.Id == dr.GetInt32(6));
+                            job = new Darbas(dr.GetInt32(0), dr.GetString(1), dr.GetString(2), statusas, dr.GetDateTime(4), user, field);
+                            jobs.Add(job);
+                        }
+                    }
+                }
+                connection.Close();
+            }
+            return jobs;
         }
 
 

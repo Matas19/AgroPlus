@@ -25,3 +25,5 @@ C:\Users\Matas\source\repos\AgroPlus\UserInterface\obj\Debug\Windows\AddFieldUI.
 C:\Users\Matas\source\repos\AgroPlus\UserInterface\obj\Debug\Windows\AddFieldUI.baml
 C:\Users\Matas\source\repos\AgroPlus\UserInterface\obj\Debug\Windows\AddJobUI.g.cs
 C:\Users\Matas\source\repos\AgroPlus\UserInterface\obj\Debug\Windows\AddJobUI.baml
+C:\Users\Matas\source\repos\AgroPlus\UserInterface\obj\Debug\Windows\FieldInfoUI.g.cs
+C:\Users\Matas\source\repos\AgroPlus\UserInterface\obj\Debug\Windows\FieldInfoUI.baml

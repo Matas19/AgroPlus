@@ -24,14 +24,18 @@ namespace UserInterface
     {
         private Vartotojas _user;
         private Engine _engine;
+        public Laukas FieldForInfo { get; set; }
+        public List<Darbas> _jobs { get; set; }
 
         public AgroUI(Vartotojas user, Engine engine)
         {
-            
-            InitializeComponent();
             _user = user;
             _engine = engine;
+            AtnaujintiDarbuSarasa();
+            InitializeComponent();
+            
             introLabel.Content = $"{user.Vardas}";
+            //DataContext = this;
         }
 
         private void PridetiLauka(object sender, RoutedEventArgs e)
@@ -52,6 +56,43 @@ namespace UserInterface
         {
             AddJobUI ui = new AddJobUI(_engine);
             ui.Show();
+        }
+        private void AtnaujintiDarbuSarasa()
+        {
+            _jobs = _engine.UserDatabase.GetJobs();
+        }
+
+        private void atnaujintiBtn_Click(object sender, RoutedEventArgs e)
+        {
+            jobsListBox.ItemsSource = null;
+            AtnaujintiDarbuSarasa();
+            jobsListBox.ItemsSource = _jobs;
+        }
+
+        private void PasirinktiLauka(object sender, RoutedEventArgs e)
+        {
+            FieldInfoUI ui = new FieldInfoUI(this, _engine);
+            ui.Show();
+        }
+        public void AtnaujintiSarasaPagalLauka(Laukas field)
+        {
+            jobsListBox.ItemsSource = null;
+            _jobs = _engine.UserDatabase.GetByField(field);
+            jobsListBox.ItemsSource = _jobs;
+        }
+
+        private void RodytiLaisvusDarbus(object sender, RoutedEventArgs e)
+        {
+            jobsListBox.ItemsSource = null;
+            _jobs = _engine.UserDatabase.GetFieldsByWorker(false);
+            jobsListBox.ItemsSource = _jobs;
+        }
+
+        private void RodytiUzimtusDarbus(object sender, RoutedEventArgs e)
+        {
+            jobsListBox.ItemsSource = null;
+            _jobs = _engine.UserDatabase.GetFieldsByWorker(true);
+            jobsListBox.ItemsSource = _jobs;
         }
     }
 }

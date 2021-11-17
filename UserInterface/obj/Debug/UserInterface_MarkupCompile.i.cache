@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Matas\source\repos\AgroPlus\UserInterface\App.xaml
-62054930323
+7311414829
 
-111603138162
+121826047648
 14320078643
-Windows\AddFieldUI.xaml;Windows\AddJobUI.xaml;Windows\AgroUI.xaml;MainWindow.xaml;Windows\RegForm.xaml;Windows\WorkerUI.xaml;
+Windows\AddFieldUI.xaml;Windows\AddJobUI.xaml;Windows\AgroUI.xaml;MainWindow.xaml;Windows\FieldInfoUI.xaml;Windows\RegForm.xaml;Windows\WorkerUI.xaml;
 
 True
 

@@ -22,7 +22,7 @@ namespace UserInterface.Windows
     public partial class AddJobUI : Window
     {
         private Engine _engine;
-        private List<Laukas> fields;
+        private List<Laukas> _fields;
         
         public AddJobUI(Engine engine)
         {
@@ -32,15 +32,10 @@ namespace UserInterface.Windows
         }
         private void ReadFields()
         {
-            fields = _engine.UserDatabase.GetFields();
-            //MessageBox.Show($"{fields[1].Id} {fields[1].Pavadinimas} {fields[1].Vieta}");
-            //foreach(Laukas field in fields)
-            //{
-            //    jobFieldBox.Items.Insert(field.Id, field.Pavadinimas);
-            //}
-            for(int i = 0; i<fields.Count; i++)
+            _fields = _engine.UserDatabase.GetFields();
+            for(int i = 0; i<_fields.Count; i++)
             {
-                jobFieldBox.Items.Insert(i, fields[i].Pavadinimas);
+                jobFieldBox.Items.Insert(i, _fields[i].Pavadinimas);
             }
         }
 
@@ -48,7 +43,7 @@ namespace UserInterface.Windows
         {
             if (jobNameBox.Text != "" && jobDiscriptionBox.Text != ""&&jobDatePicker.SelectedDate!=null&&jobFieldBox.SelectedIndex!=-1)
             {
-                Laukas selectedField = fields[jobFieldBox.SelectedIndex];
+                Laukas selectedField = _fields[jobFieldBox.SelectedIndex];
                 DateTime newDate = jobDatePicker.SelectedDate ?? DateTime.Now;
                 Darbas job = new Darbas(jobNameBox.Text, jobDiscriptionBox.Text, newDate, selectedField);
                 _engine.UserDatabase.AddJob(job);

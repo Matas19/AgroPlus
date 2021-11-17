@@ -5,14 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UserInterface"
         mc:Ignorable="d"
-        Title="AgroUI" Height="450" Width="800" MinHeight="450" MinWidth="620">
+        Title="AgroUI" Height="450" Width="800" MinHeight="450" MinWidth="795">
+    <Window.DataContext>
+        <Binding RelativeSource="{RelativeSource Self}"/>
+    </Window.DataContext>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
@@ -22,15 +24,72 @@
         <Label Grid.Row="0" x:Name="introLabel" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Greeting" FontSize="20"/>
         <Border Grid.Row="1" BorderThickness="0,2,0,2" BorderBrush="ForestGreen"/>
         <StackPanel Grid.Row="1" Orientation="Horizontal" >
-            <Button Grid.Row="1" x:Name="pridetiDarbaBtn" Content="Prideti darbą"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderThickness="0,1,1,1" BorderBrush="ForestGreen" Background="White" Padding="9" Margin="0,1" Click="PridetiDarba"/>
-            <Button Grid.Row="1" x:Name="laisviDarbaiBtn" Content="Laisvi darbai"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderThickness="0,1,1,1" BorderBrush="ForestGreen" Background="White" Padding="9" Margin="0,1"/>
-            <Button Grid.Row="1" x:Name="pridetiLaukaBtn" Content="Prideti lauką"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderThickness="0,1,1,1" BorderBrush="ForestGreen" Background="White" Padding="9" Margin="0,1" Click="PridetiLauka"/>
-            <Button Grid.Row="1" x:Name="laukoInfoBtn" Content="Informacija apie lauką" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderThickness="0,1,1,1" BorderBrush="ForestGreen" Background="White" Padding="9" Margin="0,1"/>
+            <Button x:Name="pridetiDarbaBtn" Content="Prideti darbą"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderThickness="0,1,1,1" BorderBrush="ForestGreen" Background="White" Padding="9" Margin="0,1" Click="PridetiDarba"/>
+            <Border>
+                <StackPanel>
+                    <Button x:Name="laisviDarbaiBtn" Content="Laisvi darbai"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderThickness="0,1,1,0" BorderBrush="ForestGreen" Background="White" Height="24" Margin="0,1,0,0" Click="RodytiLaisvusDarbus"/>
+                    <Button x:Name="uzimtiDarbaiBtn" Content="Užimti darbai"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderThickness="0,1,1,1" BorderBrush="ForestGreen" Background="White" Height="24" Click="RodytiUzimtusDarbus"/>
+                </StackPanel>
+            </Border>
+            <Button  x:Name="atnaujintiBtn" Content="Visi darbai"   HorizontalAlignment="Right" BorderThickness="0,1,1,1" BorderBrush="ForestGreen" Background="White" Padding="9" Margin="0,1" Click="atnaujintiBtn_Click"/>
+            <Button x:Name="pridetiLaukaBtn" Content="Prideti lauką"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderThickness="0,1,1,1" BorderBrush="ForestGreen" Background="White" Padding="9" Margin="0,1" Click="PridetiLauka"/>
+            <Button x:Name="laukoInfoBtn" Content="Informacija apie lauką" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderThickness="0,1,1,1" BorderBrush="ForestGreen" Background="White" Padding="9" Margin="0,1" Click="PasirinktiLauka"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button  x:Name="atnaujintiBtn" Content="Atnaujinti duomenis" Padding="5" Height="40" HorizontalAlignment="Right" Margin="0,0,10,0"/>
+            
             <Button  x:Name="atsijungtiBtn" Content="Atsijungti" Width="70" Height="40" HorizontalAlignment="Right" Margin="0,0,10,0" Click="atsijungtiBtn_Click"/>
         </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="350"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="115"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="Pavadimas" HorizontalAlignment="Center"/>
+                <Label Grid.Column="1" Content="Apibūdinimas" HorizontalAlignment="Center"/>
+                <Label Grid.Column="2" Content="Statusas" HorizontalAlignment="Center"/>
+                <Label Grid.Column="3" Content="Uzimtumas" HorizontalAlignment="Center"/>
+                <Label Grid.Column="4" Content="Data" HorizontalAlignment="Center"/>
+                <Label Grid.Column="5" Content="Lauko pavadinimas" HorizontalAlignment="Center"/>
+            </Grid>
+        </StackPanel>
+
+        <ListBox Grid.Row="3" x:Name="jobsListBox" ItemsSource="{Binding _jobs}" Margin="-6,0">
+        
+            <ListBox.ItemTemplate >
+                <DataTemplate>
+                    <Grid Margin="-2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="350"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="115"/>
+                        </Grid.ColumnDefinitions>
+
+                        
+                        <Border Grid.Column="0" BorderThickness="1,0,1,1" BorderBrush="Black" Height="60" >
+                            <TextBlock Text="{Binding Pavadinimas}"  TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" />
+                        </Border>
+                        <Border Grid.Column="1" BorderThickness="0,0,1,1" BorderBrush="Black" Height="60"  >
+                            <TextBlock Text="{Binding Aprasymas}" TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                        </Border>
+                        <Label Grid.Column="2" Content="{Binding Busena}" BorderThickness="0,0,1,1" BorderBrush="Black" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="60"/>
+                        <Label Grid.Column="3" Content="{Binding Uzimtumas}" BorderThickness="0,0,1,1" BorderBrush="Black" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="60"/>
+                        <Label Grid.Column="4" Content="{Binding Data}" BorderThickness="0,0,1,1" BorderBrush="Black" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="60"/>
+                        <Border Grid.Column="5" BorderThickness="0,0,1,1" BorderBrush="Black" Height="60">
+                            <TextBlock Text="{Binding Field.Pavadinimas}" TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                        </Border>
+                        
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         
         
     </Grid>
