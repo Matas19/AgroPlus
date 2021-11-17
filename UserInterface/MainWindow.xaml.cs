@@ -44,7 +44,7 @@ namespace UserInterface
                 
                 if (user.Pareigos.Trim() == "Darbuotojas")
                 {
-                    WorkerUI workerUI = new WorkerUI(user);
+                    WorkerUI workerUI = new WorkerUI(user, _engine);
                     
                     workerUI.Show();
                 }

@@ -25,7 +25,7 @@ namespace UserInterface
         private Vartotojas _user;
         private Engine _engine;
         public Laukas FieldForInfo { get; set; }
-        public List<Darbas> _jobs { get; set; }
+        public List<Darbas> Jobs { get; set; }
 
         public AgroUI(Vartotojas user, Engine engine)
         {
@@ -33,9 +33,7 @@ namespace UserInterface
             _engine = engine;
             AtnaujintiDarbuSarasa();
             InitializeComponent();
-            
-            introLabel.Content = $"{user.Vardas}";
-            //DataContext = this;
+            introLabel.Content = $"{user.Vardas} {user.Pavarde}";
         }
 
         private void PridetiLauka(object sender, RoutedEventArgs e)
@@ -59,14 +57,14 @@ namespace UserInterface
         }
         private void AtnaujintiDarbuSarasa()
         {
-            _jobs = _engine.UserDatabase.GetJobs();
+            Jobs = _engine.UserDatabase.GetJobs();
         }
 
         private void atnaujintiBtn_Click(object sender, RoutedEventArgs e)
         {
             jobsListBox.ItemsSource = null;
             AtnaujintiDarbuSarasa();
-            jobsListBox.ItemsSource = _jobs;
+            jobsListBox.ItemsSource = Jobs;
         }
 
         private void PasirinktiLauka(object sender, RoutedEventArgs e)
@@ -77,22 +75,22 @@ namespace UserInterface
         public void AtnaujintiSarasaPagalLauka(Laukas field)
         {
             jobsListBox.ItemsSource = null;
-            _jobs = _engine.UserDatabase.GetByField(field);
-            jobsListBox.ItemsSource = _jobs;
+            Jobs = _engine.UserDatabase.GetJobsByField(field);
+            jobsListBox.ItemsSource = Jobs;
         }
 
         private void RodytiLaisvusDarbus(object sender, RoutedEventArgs e)
         {
             jobsListBox.ItemsSource = null;
-            _jobs = _engine.UserDatabase.GetFieldsByWorker(false);
-            jobsListBox.ItemsSource = _jobs;
+            Jobs = _engine.UserDatabase.GetJobsByWorker(false);
+            jobsListBox.ItemsSource = Jobs;
         }
 
         private void RodytiUzimtusDarbus(object sender, RoutedEventArgs e)
         {
             jobsListBox.ItemsSource = null;
-            _jobs = _engine.UserDatabase.GetFieldsByWorker(true);
-            jobsListBox.ItemsSource = _jobs;
+            Jobs = _engine.UserDatabase.GetJobsByWorker(true);
+            jobsListBox.ItemsSource = Jobs;
         }
     }
 }

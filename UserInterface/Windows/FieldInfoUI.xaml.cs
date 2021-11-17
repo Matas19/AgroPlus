@@ -44,7 +44,6 @@ namespace UserInterface.Windows
         {
             if (fieldInfoBox.SelectedIndex != -1)
             {
-                //_parent.FieldForInfo = ;
                 _parent.AtnaujintiSarasaPagalLauka(_fields[fieldInfoBox.SelectedIndex]);
                 this.Close();
             }

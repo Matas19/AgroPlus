@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UserInterface"
         mc:Ignorable="d"
-        Title="AgroUI" Height="450" Width="800" MinHeight="450" MinWidth="795">
+        Title="AgroUI" Height="450" Width="900" MinHeight="450" MinWidth="795">
     <Window.DataContext>
         <Binding RelativeSource="{RelativeSource Self}"/>
     </Window.DataContext>

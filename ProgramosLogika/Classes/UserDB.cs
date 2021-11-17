@@ -189,7 +189,7 @@ namespace ProgramosLogika.Classes
             List<Vartotojas> users = GetUsers();
             List<Laukas> fields = GetFields();
             Darbas job;
-            using (cmd = new SqlCommand(@"SELECT * FROM Darbas", connection))
+            using (cmd = new SqlCommand(@"SELECT * FROM Darbas ORDER BY Data", connection))
             {
                 connection.Open();
                 using (dr = cmd.ExecuteReader())
@@ -231,7 +231,7 @@ namespace ProgramosLogika.Classes
             }
             return jobs;
         }
-        public List<Darbas> GetByField(Laukas laukas)
+        public List<Darbas> GetJobsByField(Laukas laukas)
         {
             List<Darbas> jobs = new List<Darbas>();
             List<Vartotojas> users = GetUsers();
@@ -279,15 +279,15 @@ namespace ProgramosLogika.Classes
             }
             return jobs;
         }
-        public List<Darbas> GetFieldsByWorker(bool uzimtas)
+        public List<Darbas> GetJobsByWorker(bool uzimtas)
         {
             List<Darbas> jobs = new List<Darbas>();
             List<Vartotojas> users = GetUsers();
             List<Laukas> fields = GetFields();
             Darbas job;
             string cmdLine;
-            if (uzimtas) cmdLine = $"SELECT * FROM Darbas WHERE FK_Vartotojas IS NOT NULL";
-            else cmdLine = $"SELECT * FROM Darbas WHERE FK_Vartotojas IS NULL";
+            if (uzimtas) cmdLine = $"SELECT * FROM Darbas WHERE FK_Vartotojas IS NOT NULL ORDER BY Data";
+            else cmdLine = $"SELECT * FROM Darbas WHERE FK_Vartotojas IS NULL  ORDER BY Data";
             using (cmd = new SqlCommand(cmdLine, connection))
             {
                 connection.Open();
@@ -330,7 +330,76 @@ namespace ProgramosLogika.Classes
             }
             return jobs;
         }
+        public List<Darbas> GetJobsByWorkerId(int workerId)
+        {
+            List<Darbas> jobs = new List<Darbas>();
+            List<Vartotojas> users = GetUsers();
+            List<Laukas> fields = GetFields();
+            Darbas job;
+            using (cmd = new SqlCommand($"SELECT * FROM Darbas WHERE FK_Vartotojas = '{workerId}' AND Statusas = 0  ORDER BY Data", connection))
+            {
+                connection.Open();
+                using (dr = cmd.ExecuteReader())
+                {
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            int id = dr.GetInt32(0);
+                            string pavadinimas = dr.GetString(1);
+                            string aprasymas = dr.GetString(2);
+                            bool statusasbool = dr.GetBoolean(3);
+                            int statusas;
+                            if (statusasbool)
+                            {
+                                statusas = 1;
+                            }
+                            else
+                            {
+                                statusas = 0;
+                            }
+                            DateTime date = dr.GetDateTime(4);
+                            Vartotojas user;
+                            if (dr[5] != DBNull.Value)
+                            {
+                                user = users.First(x => x.Id == dr.GetInt32(5));
+                            }
+                            else
+                            {
+                                user = null;
+                            }
+                            Laukas field = fields.First(x => x.Id == dr.GetInt32(6));
+                            job = new Darbas(dr.GetInt32(0), dr.GetString(1), dr.GetString(2), statusas, dr.GetDateTime(4), user, field);
+                            jobs.Add(job);
+                        }
+                    }
+                }
+                connection.Close();
+            }
+            return jobs;
+        }
+        public void AssignJob(int workerId, int jobId)
+        {
+            using (cmd = new SqlCommand(@"UPDATE Darbas SET FK_Vartotojas = @workerId WHERE PK_Id = @jobId", connection))
+            {
+                connection.Open();
+                cmd.Parameters.Add(new SqlParameter("workerId", workerId));
+                cmd.Parameters.Add(new SqlParameter("jobId", jobId));
+                cmd.ExecuteNonQuery();
+                connection.Close();
+            }
 
+        }
+        public void FinishJob(int jobId)
+        {
+            using (cmd = new SqlCommand(@"UPDATE Darbas SET Statusas = 1 WHERE PK_Id = @jobId", connection))
+            {
+                connection.Open();
+                cmd.Parameters.Add(new SqlParameter("jobId", jobId));
+                cmd.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
 
 
 
