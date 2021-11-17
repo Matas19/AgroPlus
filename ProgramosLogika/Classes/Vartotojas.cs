@@ -13,8 +13,6 @@ namespace ProgramosLogika.Classes
         public string Pavarde { get; }
         public string Pareigos { get; }
         public string Username { get; }
-        private string _password;
-
         //konstruktorius skirtas sukurti objekta, kuris pernestu duomenis i DB
         public Vartotojas(string vardas, string pavarde, string pareigos, string username)
         {
@@ -23,18 +21,15 @@ namespace ProgramosLogika.Classes
             Pareigos = pareigos;
             Username = username;
         }
-
         //konstruktorius skirtas sukurti objekta, kuris butu vartojas UI valdyme
-        public Vartotojas(int id, string vardas, string pavarde, string pareigos, string username, string password)
+        public Vartotojas(int id, string vardas, string pavarde, string pareigos, string username)
         {
             Id = id;
             Vardas = vardas;
             Pavarde = pavarde;
             Pareigos = pareigos;
             Username = username;
-            _password = password;
         }
 
-        
     }
 }

@@ -39,16 +39,13 @@ namespace UserInterface.Windows
                 fieldInfoBox.Items.Insert(i, _fields[i].Pavadinimas);
             }
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void PasirinktiLauka(object sender, RoutedEventArgs e)
         {
             if (fieldInfoBox.SelectedIndex != -1)
             {
                 _parent.AtnaujintiSarasaPagalLauka(_fields[fieldInfoBox.SelectedIndex]);
                 this.Close();
             }
-            
-            
         }
     }
 }

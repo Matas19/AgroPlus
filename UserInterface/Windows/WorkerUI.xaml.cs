@@ -42,14 +42,13 @@ namespace UserInterface.Windows
         }
         private void AtnaujintiManoDarbuSarasa()
         {
-            Jobs = _engine.UserDatabase.GetJobsByWorkerId(_user.Id);
+            Jobs = _engine.UserDatabase.GetJobsByWorkerId(_user.Id, 0);
         }
         private void RodytiManoDarbus(object sender, RoutedEventArgs e)
         {
             AtnaujintiManoDarbus();
             selectJobBtn.Visibility = Visibility.Collapsed;
             finishJobBtn.Visibility = Visibility.Visible;
-            
         }
         public void AtnaujintiManoDarbus()
         {
@@ -77,7 +76,6 @@ namespace UserInterface.Windows
                 AtnaujintiLaisvusDarbus();
             }
         }
-
         private void BaigtiDarba(object sender, RoutedEventArgs e)
         {
             if (jobsListBox.SelectedItem is Darbas darbas)
@@ -85,6 +83,18 @@ namespace UserInterface.Windows
                 _engine.UserDatabase.FinishJob(darbas.Id);
                 AtnaujintiManoDarbus();
             }
+        }
+        private void RodytiBaigtusDarbus(object sender, RoutedEventArgs e)
+        {
+            AtnaujintiBaigtusDarbus();
+            selectJobBtn.Visibility = Visibility.Collapsed;
+            finishJobBtn.Visibility = Visibility.Collapsed;
+        }
+        public void AtnaujintiBaigtusDarbus()
+        {
+            jobsListBox.ItemsSource = null;
+            Jobs = _engine.UserDatabase.GetJobsByWorkerId(_user.Id, 1);
+            jobsListBox.ItemsSource = Jobs;
         }
     }
 }

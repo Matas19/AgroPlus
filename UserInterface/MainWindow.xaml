@@ -30,8 +30,8 @@
 
 
         <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-            <Button x:Name="loginbutton" Content="Prisijungti" Width="304" Height="44" Click="loginbutton_Click"/>
-            <Button x:Name="registerButton" Content="Registracija" Width="218" Height="31" Click="registerButton_Click" Margin="0, 15"/>
+            <Button x:Name="loginbutton" Content="Prisijungti" Width="304" Height="44" Click="Prisijungti"/>
+            <Button x:Name="registerButton" Content="Registracija" Width="218" Height="31" Click="Registruotis" Margin="0, 15"/>
         </StackPanel>
 
     </Grid>

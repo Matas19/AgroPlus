@@ -29,11 +29,9 @@
         <StackPanel Grid.Row="1" Orientation="Horizontal" >
             <Button Content="Mano darbai"  HorizontalAlignment="Right" BorderThickness="0,1,1,1" BorderBrush="ForestGreen" Background="White" Padding="9" Margin="0,1" Click="RodytiManoDarbus"/>
             <Button Content="Lasivi darbai"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderThickness="0,1,1,1" BorderBrush="ForestGreen" Background="White" Padding="9" Margin="0,1" Click="RodytiLaisvusDarbus"/>
-            
+            <Button Content="Baigti darbai"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderThickness="0,1,1,1" BorderBrush="ForestGreen" Background="White" Padding="9" Margin="0,1" Click="RodytiBaigtusDarbus"/>
         </StackPanel>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button  x:Name="atsijungtiBtn" Content="Atsijungti" Width="70" Height="40" HorizontalAlignment="Right" Margin="0,0,10,0" Click="Atsijungti"/>
-        </StackPanel>
+        <Button Grid.Row="1"  x:Name="atsijungtiBtn" Content="Atsijungti" Width="70" Height="40" HorizontalAlignment="Right" Margin="0,0,10,0" Click="Atsijungti"/>
         <StackPanel Grid.Row="2" Orientation="Horizontal">
             <Grid >
                 <Grid.ColumnDefinitions>

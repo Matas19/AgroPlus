@@ -26,6 +26,6 @@
             <TextBox x:Name="fieldNameBox" Margin="5,5,15,5" MaxLength="50"/>
             <TextBox x:Name="fieldPlaceBox" Height="40" Margin="5,5,15,5" TextWrapping="Wrap" AcceptsReturn="True" MaxLength="100"/>            <TextBox x:Name="fieldDiscriptionBox" Height="60" Margin="5,5,15,5" TextWrapping="Wrap" AcceptsReturn="True" MaxLength="200"/>
         </StackPanel>
-        <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Pridėti lauką" Click="Button_Click"/>
+        <Button Grid.Row="2" Grid.ColumnSpan="2" Content="Pridėti lauką" Click="PridetiLauka"/>
     </Grid>
 </Window>

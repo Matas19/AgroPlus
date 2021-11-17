@@ -30,7 +30,7 @@ namespace UserInterface.Windows
             _engine = engine;
             ReadFields();
         }
-        private void ReadFields()
+        private void ReadFields()   //nuskaito esamus laukus, norint gauti juos ComboBox'e
         {
             _fields = _engine.UserDatabase.GetFields();
             for(int i = 0; i<_fields.Count; i++)
@@ -38,7 +38,6 @@ namespace UserInterface.Windows
                 jobFieldBox.Items.Insert(i, _fields[i].Pavadinimas);
             }
         }
-
         private void PridetiDarba(object sender, RoutedEventArgs e)
         {
             if (jobNameBox.Text != "" && jobDiscriptionBox.Text != ""&&jobDatePicker.SelectedDate!=null&&jobFieldBox.SelectedIndex!=-1)
@@ -53,7 +52,6 @@ namespace UserInterface.Windows
             {
                 MessageBox.Show("Neuzpildyti visi laukai!");
             }
-
         }
     }
 }

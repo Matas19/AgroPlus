@@ -10,9 +10,5 @@ namespace ProgramosLogika
     public class Engine
     {
         public UserDB UserDatabase = new UserDB();
-        public bool UsernameExists(string username)
-        {
-            return UserDatabase.CheckUsernameExists(username);
-        }
     }
 }
