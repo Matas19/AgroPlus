@@ -36,7 +36,7 @@ namespace UserInterface.Windows
             int logInResult = Functions.CheckRegFields(usernameReg.Text, vardasReg.Text, pavardeReg.Text, passwordReg.Password, rePasswordReg.Password);
             if (logInResult == 0 && ProfessionChoiseReg.SelectedItem!=null)
             {
-                if(_engine.UserDatabase.CheckUsernameExists(usernameReg.Text))
+                if(!_engine.UserDatabase.CheckUsernameExists(usernameReg.Text))
                 {
                     Vartotojas usr = new Vartotojas(vardasReg.Text, pavardeReg.Text, ProfessionChoiseReg.Text, usernameReg.Text);
                     MessageBox.Show("Registracija sekminga!");
