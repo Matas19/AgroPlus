@@ -42,14 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\UserBase.cs" />
     <Compile Include="Classes\UserDB.cs" />
     <Compile Include="Classes\Vartotojas.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Classes\Darbas.cs" />
-    <Compile Include="Classes\Darbuotojas.cs" />
     <Compile Include="Classes\Laukas.cs" />
-    <Compile Include="Classes\User.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

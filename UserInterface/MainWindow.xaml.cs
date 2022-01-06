@@ -32,20 +32,16 @@ namespace UserInterface
             _engine = new Engine();
             _engine.UserDatabase.OpenConnection();
         }
-
         //Login funkcija
-        private void loginbutton_Click(object sender, RoutedEventArgs e)
+        private void Prisijungti(object sender, RoutedEventArgs e)
         {
             Vartotojas user;
             user = _engine.UserDatabase.GetUser(usernameLogin.Text, passwordLogin.Password);
-
             if(user != null)
             {
-                
                 if (user.Pareigos.Trim() == "Darbuotojas")
                 {
-                    WorkerUI workerUI = new WorkerUI(user);
-                    
+                    WorkerUI workerUI = new WorkerUI(user, _engine);
                     workerUI.Show();
                 }
                 else if (user.Pareigos == "Agronomas")
@@ -59,11 +55,9 @@ namespace UserInterface
             {
                 loginError.Content = "Blogas įvestas prisijungimo vardas arba slaptažodis!";
             }
-            
         }
-
         //registracija
-        private void registerButton_Click(object sender, RoutedEventArgs e)
+        private void Registruotis(object sender, RoutedEventArgs e)
         {
             RegForm registracija = new RegForm(this, _engine);
             loginError.Content = "";
@@ -71,8 +65,7 @@ namespace UserInterface
             registracija.Show();
             
         }
-
-        //abu metotai isvalo ismesta errora del blogo prisijungimo, kai juose pasikeicia informacija
+        //abu metotai isvalo ismesta error'a del blogo prisijungimo, kai juose pasikeicia informacija
         private void ClearLoginError(object sender, TextChangedEventArgs e)
         {
             loginError.Content = "";

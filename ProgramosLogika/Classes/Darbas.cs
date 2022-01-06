@@ -17,11 +17,9 @@ namespace ProgramosLogika.Classes
         public Laukas Field { get; }
         public string Uzimtumas { get; }
         public string Busena { get; }
-        
         //konstruktorius naudojamas sukurti objekta, kuris bus naudojamas duomenu pernesimui i DB
         public Darbas(string pavadinimas, string aprasymas, DateTime date, Laukas field)
         {
-  
             Pavadinimas = pavadinimas;
             Aprasymas = aprasymas;
             Data = date;

@@ -10,7 +10,7 @@
         <StackPanel>
             <Label Content="Pasirinkite norimą lauką" HorizontalAlignment="Center" FontSize="20" Margin="10"/>
             <ComboBox x:Name="fieldInfoBox" Margin="10"/>
-            <Button Content="Pasirinkti" Height="30" Click="Button_Click"/>
+            <Button Content="Pasirinkti" Height="30" Click="PasirinktiLauka"/>
         </StackPanel>
     </Grid>
 </Window>

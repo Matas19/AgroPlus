@@ -24,13 +24,77 @@ namespace UserInterface.Windows
     {
         private Vartotojas _user;
         private Engine _engine;
-        public WorkerUI(Vartotojas user)
+        public List<Darbas> Jobs { get; set; }
+        public WorkerUI(Vartotojas user, Engine engine)
         {
             _user = user;
+            _engine = engine;
+            AtnaujintiManoDarbuSarasa();
             InitializeComponent();
+            finishJobBtn.Visibility = Visibility.Collapsed;
             introLabel.Content=$"{user.Vardas} {user.Pavarde}";
         }
-
-        
+        private void Atsijungti(object sender, RoutedEventArgs e)
+        {
+            MainWindow ui = new MainWindow();
+            ui.Show();
+            this.Close();
+        }
+        private void AtnaujintiManoDarbuSarasa()
+        {
+            Jobs = _engine.UserDatabase.GetJobsByWorkerId(_user.Id, 0);
+        }
+        private void RodytiManoDarbus(object sender, RoutedEventArgs e)
+        {
+            AtnaujintiManoDarbus();
+            selectJobBtn.Visibility = Visibility.Collapsed;
+            finishJobBtn.Visibility = Visibility.Visible;
+        }
+        public void AtnaujintiManoDarbus()
+        {
+            jobsListBox.ItemsSource = null;
+            AtnaujintiManoDarbuSarasa();
+            jobsListBox.ItemsSource = Jobs;
+        }
+        private void RodytiLaisvusDarbus(object sender, RoutedEventArgs e)
+        {
+            AtnaujintiLaisvusDarbus();
+            selectJobBtn.Visibility = Visibility.Visible;
+            finishJobBtn.Visibility = Visibility.Collapsed;
+        }
+        public void AtnaujintiLaisvusDarbus()
+        {
+            jobsListBox.ItemsSource = null;
+            Jobs = _engine.UserDatabase.GetJobsByWorker(false);
+            jobsListBox.ItemsSource = Jobs;
+        }
+        private void PasirinktiDarba(object sender, RoutedEventArgs e)
+        {
+            if (jobsListBox.SelectedItem is Darbas darbas)
+            {
+                _engine.UserDatabase.AssignJob(_user.Id, darbas.Id);
+                AtnaujintiLaisvusDarbus();
+            }
+        }
+        private void BaigtiDarba(object sender, RoutedEventArgs e)
+        {
+            if (jobsListBox.SelectedItem is Darbas darbas)
+            {
+                _engine.UserDatabase.FinishJob(darbas.Id);
+                AtnaujintiManoDarbus();
+            }
+        }
+        private void RodytiBaigtusDarbus(object sender, RoutedEventArgs e)
+        {
+            AtnaujintiBaigtusDarbus();
+            selectJobBtn.Visibility = Visibility.Collapsed;
+            finishJobBtn.Visibility = Visibility.Collapsed;
+        }
+        public void AtnaujintiBaigtusDarbus()
+        {
+            jobsListBox.ItemsSource = null;
+            Jobs = _engine.UserDatabase.GetJobsByWorkerId(_user.Id, 1);
+            jobsListBox.ItemsSource = Jobs;
+        }
     }
 }

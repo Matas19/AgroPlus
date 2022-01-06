@@ -11,25 +11,23 @@ namespace ProgramosLogika.Classes
 {
     public class UserDB
     {
-        public List<User> Users { get; private set; }
         private string _dataSource = @"DESKTOP-ECCE0GR\SQLEXPRESS01";  //db adresas
-        private string _database = "AgroPlus";
-        private string _connString;
-        private SqlConnection connection;
-        private SqlCommand cmd;
-        private SqlDataReader dr;
+        private string _database = "AgroPlus";  //DB pavadinimas
+        private string _connString;     //bendras connection strin
+        private SqlConnection connection;   //naudojama prisijungti prie duomenu bazes
+        private SqlCommand cmd;     //kintamasis naudojamas vykditi SQL query
+        private SqlDataReader dr;   //rederis skirtas skaityti gautiem duomenim is DB
         public UserDB()
         {
-            Users = new List<User>();
             _connString = @"Data Source=" + _dataSource + ";Initial Catalog=" + _database + ";Trusted_Connection=True;";
         }
-        
-        public bool OpenConnection()
+        public bool OpenConnection()    //atidaro conectiona su DB
         {
-            try { 
-            connection = new SqlConnection(_connString);
+            try
+            {
+                connection = new SqlConnection(_connString);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
                 return false;
@@ -75,12 +73,12 @@ namespace ProgramosLogika.Classes
                 using (cmd = new SqlCommand($"SELECT * FROM Vartotojas WHERE Username = '{username}' AND Password = '{password}'", connection))
                 {
                     connection.Open();
-                    using(dr = cmd.ExecuteReader())
+                    using (dr = cmd.ExecuteReader())
                     {
                         if (dr.HasRows)
                         {
                             dr.Read();
-                            user = new Vartotojas(dr.GetInt32(0), dr.GetString(1), dr.GetString(2), dr.GetString(3), dr.GetString(4), dr.GetString(5));
+                            user = new Vartotojas(dr.GetInt32(0), dr.GetString(1), dr.GetString(2), dr.GetString(3), dr.GetString(4));
                             connection.Close();
                             return user;
                         }
@@ -90,7 +88,6 @@ namespace ProgramosLogika.Classes
                             return null;
                         }
                     }
-
                 }
             }
             return null;
@@ -106,9 +103,9 @@ namespace ProgramosLogika.Classes
                 {
                     if (dr.HasRows)
                     {
-                        while(dr.Read())
+                        while (dr.Read())
                         {
-                            user = new Vartotojas(dr.GetInt32(0), dr.GetString(1), dr.GetString(2), dr.GetString(3), dr.GetString(4), dr.GetString(5));
+                            user = new Vartotojas(dr.GetInt32(0), dr.GetString(1), dr.GetString(2), dr.GetString(3), dr.GetString(4));
                             users.Add(user);
                         }
                     }
@@ -151,7 +148,7 @@ namespace ProgramosLogika.Classes
         {
             List<Laukas> fields = new List<Laukas>();
             Laukas field;
-            using(cmd = new SqlCommand(@"SELECT * FROM Laukas", connection))
+            using (cmd = new SqlCommand(@"SELECT * FROM Laukas", connection))
             {
                 connection.Open();
                 using (dr = cmd.ExecuteReader())
@@ -189,7 +186,7 @@ namespace ProgramosLogika.Classes
             List<Vartotojas> users = GetUsers();
             List<Laukas> fields = GetFields();
             Darbas job;
-            using (cmd = new SqlCommand(@"SELECT * FROM Darbas", connection))
+            using (cmd = new SqlCommand(@"SELECT * FROM Darbas ORDER BY Data", connection))
             {
                 connection.Open();
                 using (dr = cmd.ExecuteReader())
@@ -213,7 +210,7 @@ namespace ProgramosLogika.Classes
                             }
                             DateTime date = dr.GetDateTime(4);
                             Vartotojas user;
-                            if (dr[5] != DBNull.Value) 
+                            if (dr[5] != DBNull.Value)
                             {
                                 user = users.First(x => x.Id == dr.GetInt32(5));
                             }
@@ -222,7 +219,7 @@ namespace ProgramosLogika.Classes
                                 user = null;
                             }
                             Laukas field = fields.First(x => x.Id == dr.GetInt32(6));
-                            job = new Darbas(dr.GetInt32(0), dr.GetString(1), dr.GetString(2),statusas, dr.GetDateTime(4), user, field);
+                            job = new Darbas(dr.GetInt32(0), dr.GetString(1), dr.GetString(2), statusas, dr.GetDateTime(4), user, field);
                             jobs.Add(job);
                         }
                     }
@@ -231,7 +228,7 @@ namespace ProgramosLogika.Classes
             }
             return jobs;
         }
-        public List<Darbas> GetByField(Laukas laukas)
+        public List<Darbas> GetJobsByField(Laukas laukas)
         {
             List<Darbas> jobs = new List<Darbas>();
             List<Vartotojas> users = GetUsers();
@@ -279,15 +276,15 @@ namespace ProgramosLogika.Classes
             }
             return jobs;
         }
-        public List<Darbas> GetFieldsByWorker(bool uzimtas)
+        public List<Darbas> GetJobsByWorker(bool uzimtas)
         {
             List<Darbas> jobs = new List<Darbas>();
             List<Vartotojas> users = GetUsers();
             List<Laukas> fields = GetFields();
             Darbas job;
             string cmdLine;
-            if (uzimtas) cmdLine = $"SELECT * FROM Darbas WHERE FK_Vartotojas IS NOT NULL";
-            else cmdLine = $"SELECT * FROM Darbas WHERE FK_Vartotojas IS NULL";
+            if (uzimtas) cmdLine = $"SELECT * FROM Darbas WHERE FK_Vartotojas IS NOT NULL ORDER BY Data";
+            else cmdLine = $"SELECT * FROM Darbas WHERE FK_Vartotojas IS NULL  ORDER BY Data";
             using (cmd = new SqlCommand(cmdLine, connection))
             {
                 connection.Open();
@@ -330,75 +327,77 @@ namespace ProgramosLogika.Classes
             }
             return jobs;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*public void AddNewWorker(string username, string password, string vardas, string pavarde)
+        public List<Darbas> GetJobsByWorkerId(int workerId, int stat)
         {
-            Users.Add(new Darbuotojas(username, password, vardas, pavarde));
-        }
-        public void AddWorker(string username, string password, string vardas, string pavarde, List<int> darbai)
-        {
-            Users.Add(new Darbuotojas(username, password, vardas, pavarde, darbai));
-        }
-        public void AddAgro(string username, string password, string vardas, string pavarde)
-        {
-            Users.Add(new Agronomas(username, password, vardas, pavarde));
-        }
-        
-        public User Login(string username, string password)
-        {
-            User user = FindUser(username);
-            if (user!=null)
+            List<Darbas> jobs = new List<Darbas>();
+            List<Vartotojas> users = GetUsers();
+            List<Laukas> fields = GetFields();
+            Darbas job;
+            using (cmd = new SqlCommand($"SELECT * FROM Darbas WHERE FK_Vartotojas = @workerId AND Statusas = @stat  ORDER BY Data", connection))
             {
-                if(user.TryLogIn(username, password))
+                connection.Open();
+                cmd.Parameters.Add(new SqlParameter("workerId", workerId));
+                cmd.Parameters.Add(new SqlParameter("stat", stat));
+                using (dr = cmd.ExecuteReader())
                 {
-                    return user;
+                    if (dr.HasRows)
+                    {
+                        while (dr.Read())
+                        {
+                            int id = dr.GetInt32(0);
+                            string pavadinimas = dr.GetString(1);
+                            string aprasymas = dr.GetString(2);
+                            bool statusasbool = dr.GetBoolean(3);
+                            int statusas;
+                            if (statusasbool)
+                            {
+                                statusas = 1;
+                            }
+                            else
+                            {
+                                statusas = 0;
+                            }
+                            DateTime date = dr.GetDateTime(4);
+                            Vartotojas user;
+                            if (dr[5] != DBNull.Value)
+                            {
+                                user = users.First(x => x.Id == dr.GetInt32(5));
+                            }
+                            else
+                            {
+                                user = null;
+                            }
+                            Laukas field = fields.First(x => x.Id == dr.GetInt32(6));
+                            job = new Darbas(dr.GetInt32(0), dr.GetString(1), dr.GetString(2), statusas, dr.GetDateTime(4), user, field);
+                            jobs.Add(job);
+                        }
+                    }
                 }
+                connection.Close();
             }
-            return null;
+            return jobs;
         }
-        public User FindUser(string username)
+        public void AssignJob(int workerId, int jobId)
         {
-            foreach(User item in Users)
+            using (cmd = new SqlCommand(@"UPDATE Darbas SET FK_Vartotojas = @workerId WHERE PK_Id = @jobId", connection))
             {
-                if (item.CheckUsername(username))
-                {
-                    return item;
-                }
+                connection.Open();
+                cmd.Parameters.Add(new SqlParameter("workerId", workerId));
+                cmd.Parameters.Add(new SqlParameter("jobId", jobId));
+                cmd.ExecuteNonQuery();
+                connection.Close();
             }
 
-            return null;
         }
-        */
+        public void FinishJob(int jobId)
+        {
+            using (cmd = new SqlCommand(@"UPDATE Darbas SET Statusas = 1 WHERE PK_Id = @jobId", connection))
+            {
+                connection.Open();
+                cmd.Parameters.Add(new SqlParameter("jobId", jobId));
+                cmd.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
     }
 }
